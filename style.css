@@ -25,11 +25,13 @@ body {
     line-height: 1.6;
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 2px 20px; /* moved content up ~20px */
     transition: background-color 240ms ease, color 240ms ease;
 }
 
 h1, h2, h3 { color: var(--accent-color); }
+
+h1 { margin: 0; }
 
 /* Text alignment: justify main textual content for a clean, book-like layout */
 p, .card p, .subtitle, .gallery-grid figcaption {
@@ -41,8 +43,38 @@ header {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    margin-bottom: 20px;
-    padding-top: 6px; /* keep space from fixed toggle */
+    margin-bottom: 60px; /* increased spacing to accommodate lowered logo */
+    padding-top: 12px; /* keep space from fixed toggle */
+    transform: translateY(-50px); /* move header up by 50px */
+}
+
+@media (max-width: 900px) {
+    header { transform: translateY(-35px); }
+}
+
+@media (max-width: 480px) {
+    header { transform: translateY(-20px); }
+} 
+
+.identity { width: 100%; display: flex; align-items: flex-start; justify-content: flex-start; gap: 16px; }
+.identity-left { display: flex; flex-direction: column; }
+.title-row { display:flex; align-items: baseline; gap: 12px; }
+/* Force both logo images to identical dimensions and use object-fit for consistent aspect handling */
+.logo-snake { display: inline-block; width: 120px; height: 120px; object-fit: contain; margin-left: 0; flex-shrink: 0; transform: translateY(48px); transition: transform 180ms ease, opacity 180ms ease; }
+.logo-snake.logo-dark { display: none; opacity: 0; }
+body.dark-mode .logo-snake.logo-dark { display: inline-block; opacity: 1; }
+body.dark-mode .logo-snake.logo-light { display: none; opacity: 0; }
+.logo-snake:hover { transform: translateY(48px) scale(1.03); }
+
+/* responsive sizes */
+@media (max-width: 900px) {
+    .identity { gap: 12px; }
+    .logo-snake { width: 88px; height: 88px; transform: translateY(36px); }
+}
+@media (max-width: 480px) {
+    .identity { gap: 8px; }
+    .logo-snake { width: 64px; height: 64px; transform: translateY(28px); }
+    header { padding-top: 10px; }
 }
 
 nav {
@@ -132,7 +164,7 @@ nav a:hover {
     display: block;
     border: 1px solid rgba(7,16,42,0.06);
 }
-.gallery-grid figcaption { font-size: 0.85rem; margin-top: 6px; color: var(--text-color); }
+.gallery-grid figcaption { font-size: 0.85rem; margin-top: 6px; color: var(--text-color); text-align: center; }
 
 /* Lightbox */
 .lightbox {
