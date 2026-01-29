@@ -9,13 +9,17 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+    <button id="theme-toggle" aria-pressed="false" title="Toggle dark/light" aria-label="Toggle dark and light theme"><span class="icon" aria-hidden="true">🌙</span><span class="sr-only">Toggle theme</span></button>
 
     <header>
-        <h1>Your Name</h1>
-        <p class="subtitle">Physicist <span class="accent">//</span> Electronic Engineer</p>
-        <nav>
+        <div class="identity">
+            <h1>O.Pavon</h1>
+            <p class="subtitle">Physicist <span class="accent">//</span> Electronic Engineer</p>
+        </div>
+        <nav aria-label="Main navigation">
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
+            <a href="#gallery">Gallery</a>
             <a href="#contact">Contact</a>
         </nav>
     </header>
@@ -23,8 +27,10 @@
     <section id="about">
         <h2>About Me</h2>
         <p>
-            I specialize in the intersection of hardware and theory. From designing PCB layouts 
-            to simulating quantum mechanics, I build tools that measure the physical world.
+            Physics bachelor from University of Barcelona currently pursuing a Master's degree in Electronic Engineering at UPC. Researcher at
+            the UPC NanoSat Lab of the Theory of Signals and Communications (TSC) group.
+
+            I value simplicity, clarity and straightforwardness above all.
         </p>
     </section>
 
@@ -32,27 +38,132 @@
         <h2>Selected Works</h2>
         <div class="project-grid">
             <div class="card">
-                <h3>Particle Trajectory Simulation</h3>
-                <p class="tag">Python / NumPy / Physics</p>
-                <p>Modeled electron motion in a magnetic field using the Lorentz force law:</p>
-                <p>$$ \mathbf{F} = q(\mathbf{E} + \mathbf{v} \times \mathbf{B}) $$</p>
-                <a href="#">View Code &rarr;</a>
+                <h3>IEEE OpenPocketQube Kit</h3>
+                <p>Development of an open-source PocketQube kit for educational and research purposes.</p>
+                <a href="https://wiki.nanosatlab.space/shelves/ieee-open-pocketqube-kit-mFR" target="_blank" rel="noopener">Visit our wiki &rarr;</a>
             </div>
 
             <div class="card">
-                <h3>High-Speed Data Acquisition PCB</h3>
-                <p class="tag">Altium / FPGA / C++</p>
-                <p>Designed a 4-layer PCB for signal processing with a 100MHz sample rate and differential pair routing.</p>
-                <a href="#">View Schematics &rarr;</a>
+                <h3>BIYSC Programme</h3>
+                <p>Associated researcher/lecturer in the development of PQs 
+                for the Barcelona International Youth Science Challenge.</p>
+                <a href="https://web.archive.org/web/20250908160823/https://biysc.org/biysc_project/building-tomorrows-space-pioneers-designing-a-pocketqube-satellite/" target="_blank" rel="noopener">Check it out! &rarr;</a>
             </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            <figure>
+                <img src="images/esa_esec_me.jpeg" alt="Integration work" data-title="Integration" data-desc="Integration work for payloads and PCBs prior to qualification." data-caption="Integration work">
+                <figcaption>Integration Work</figcaption>
+            </figure>
+            <figure>
+                <img src="images/pq_tvac.jpeg" alt="Thermal vacuum testing" data-title="Thermal Vacuum Test" data-desc="Thermal vacuum chamber testing of the PocketQube units to validate thermal performance." data-caption="Thermal vacuum test">
+                <figcaption>Thermal Vacuum Test</figcaption>
+            </figure>
+            <figure>
+                <img src="images/esa_esec_team.jpg" alt="ESA ESEC team visit" data-title="Team Visit" data-desc="Team visiting ESA's facilities during the FYS4! Training Week." data-caption="ESA visit">
+                <figcaption>ESA ESEC Team</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/nano_visit.jpeg" alt="Nano satellite visit" data-title="NanoSat Lab" data-desc="Visit to the UPC NanoSat Lab by the President of the Parliament of Catalonia" data-caption="NanoSat Lab visit">
+                <figcaption>NanoSat Lab Visit</figcaption>
+            </figure>
+            <figure>
+                <img src="images/clr_debug.jpeg" alt="CLR debugging" data-title="CLR Debug" data-desc="Debugging sessions within the cleanroom." data-caption="Debug session">
+                <figcaption>CLR Debug</figcaption>
+            </figure>
+            <figure>
+                <img src="images/thermal_model.png" alt="Thermal model comparison" data-title="Thermal Model" data-desc="Thermal model and Solidworks model comparison." data-caption="Thermal model">
+                <figcaption>Thermal Model</figcaption>
+            </figure>
         </div>
     </section>
 
     <section id="contact">
         <h2>Get in Touch</h2>
-        <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
-        <p>GitHub: <a href="#">github.com/yourusername</a></p>
+        <p>Email: <a href="mailto:you@example.com">oscar.pavon@upc.edu</a></p>
+        <p>GitHub: <a href="#">github.com/o-pvnrt</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/oscarpavon/" target="_blank" rel="noopener">linkedin.com/in/oscarpavon</a></p>
     </section>
+
+    <!-- Lightbox modal -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button class="lightbox-close" aria-label="Close">✕</button>
+      <div class="lightbox-inner">
+        <img class="lightbox-img" src="" alt="">
+        <div class="lightbox-meta">
+          <h3 class="lightbox-title"></h3>
+          <p class="lightbox-desc"></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      const toggle = document.getElementById('theme-toggle');
+      const icon = toggle ? toggle.querySelector('.icon') : null;
+      const themeKey = 'theme';
+      const setTheme = (theme) => {
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+          if (toggle) { toggle.setAttribute('aria-pressed','true'); if (icon) icon.textContent = '☀️'; }
+        } else {
+          document.body.classList.remove('dark-mode');
+          if (toggle) { toggle.setAttribute('aria-pressed','false'); if (icon) icon.textContent = '🌙'; }
+        }
+      };
+      let stored = localStorage.getItem(themeKey);
+      if (!stored) {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        stored = prefersDark ? 'dark' : 'light';
+      }
+      setTheme(stored);
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const next = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+          setTheme(next);
+          localStorage.setItem(themeKey, next);
+        });
+      }
+
+      // Lightbox implementation
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = lightbox.querySelector('.lightbox-img');
+      const lbTitle = lightbox.querySelector('.lightbox-title');
+      const lbDesc = lightbox.querySelector('.lightbox-desc');
+      const closeBtn = lightbox.querySelector('.lightbox-close');
+
+      function openLightbox(src, alt, title, desc){
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        lbTitle.textContent = title || '';
+        lbDesc.textContent = desc || '';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox(){
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden','true');
+        lbImg.src = '';
+        lbTitle.textContent = '';
+        lbDesc.textContent = '';
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.gallery-grid img').forEach(img => {
+        img.addEventListener('click', () => openLightbox(img.src, img.alt, img.dataset.title, img.dataset.desc));
+      });
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+    })();
+    </script>
 
 </body>
 </html>
